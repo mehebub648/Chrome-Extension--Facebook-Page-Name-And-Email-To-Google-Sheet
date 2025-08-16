@@ -7,12 +7,32 @@
     "scripting",
     "activeTab",
     "tabs",
-    "storage"
+    "storage",
+    "alarms"
   ],
   "host_permissions": [
     "https://script.google.com/*",
     "https://script.googleusercontent.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "save-data": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Save Facebook page data to Google Sheets"
+    }
+  },
   "action": {
     "default_icon": {
       "512": "icons/icon512.png"

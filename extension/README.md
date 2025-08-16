@@ -5,7 +5,10 @@ This browser extension is designed to help you quickly save the name, email, and
 ## Features
 - Save the name, email, and URL of a Facebook page
 - Easy-to-use popup interface
-- Data is stored locally in your browser
+- **Keyboard shortcut support (Ctrl+Shift+S or ⌘+Shift+S on Mac)**
+- **Background data processing for reliability**
+- **Automatic retry mechanism for failed requests**
+- Data is queued and sent even if browser tab is closed
 
 ## Google Apps Script Setup for Save Data Extension
 
@@ -46,7 +49,9 @@ This guide explains how to set up the Google Apps Script backend and connect it 
 
 - Navigate to a Facebook page.
 - Click the extension icon and then **Save Data**.
+- **Or use the keyboard shortcut: Ctrl+Shift+S (⌘+Shift+S on Mac)**
 - The name, email, and URL will be sent to your Google Sheet.
+- Data is queued for reliable delivery and will retry automatically if the network is temporarily unavailable.
 
 ### Troubleshooting
 - Make sure your Apps Script deployment is set to "Anyone" can access.
