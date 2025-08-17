@@ -45,7 +45,7 @@ async function onDoSave() {
     });
     
     if (response.success) {
-      setStatus('Saved! Data queued reliably.');
+      setStatus('Data queued! You\'ll get a notification when sent.');
       setTimeout(() => setStatus(''), 3000);
     } else {
       throw new Error(response.error || 'Unknown error');

@@ -171,6 +171,10 @@ async function processFailedRequests() {
       request.attempts += 1;
       await sendToAppsScript(request.data);
       console.log('[Background] Successfully sent request:', request.id);
+      
+      // Show success notification
+      await showSuccessNotification(request.data);
+      
       // Don't add to stillFailed - it succeeded
     } catch (error) {
       console.error(`[Background] Failed to send request ${request.id} (attempt ${request.attempts}):`, error);
@@ -212,6 +216,40 @@ async function sendToAppsScript(payload) {
   try { json = await res.json(); } catch {}
   return json || { ok: true };
 }
+
+async function showSuccessNotification(data) {
+  try {
+    // Create a notification to inform user of successful data sending
+    const notificationId = `success_${Date.now()}`;
+    const notificationOptions = {
+      type: 'basic',
+      iconUrl: 'icons/icon512.png',
+      title: 'Data Sent Successfully!',
+      message: `Facebook page data sent to Google Sheets${data.name ? ` for "${data.name}"` : ''}.`
+    };
+    
+    await chrome.notifications.create(
+      notificationId,
+      notificationOptions
+    );
+    
+    // Auto-clear notification after 5 seconds
+    setTimeout(() => {
+      chrome.notifications.clear(notificationId);
+    }, 5000);
+    
+    console.log('[Background] Success notification shown');
+  } catch (error) {
+    console.error('[Background] Failed to show notification:', error);
+  }
+}
+
+// Handle notification clicks
+chrome.notifications.onClicked.addListener((notificationId) => {
+  if (notificationId.startsWith('success_')) {
+    chrome.notifications.clear(notificationId);
+  }
+});
 
 // Initialize: process any existing failed requests on startup
 chrome.runtime.onStartup.addListener(async () => {
