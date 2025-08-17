@@ -22,10 +22,10 @@
                     console.log('[Content Script] Data save triggered successfully');
                     
                     // Show a brief visual feedback to the user
-                    showSaveNotification('Data saved to Google Sheets!');
+                    showSaveNotification('Data queued for sending to Google Sheets!');
                 } else {
                     console.error('[Content Script] Failed to save data:', response?.error);
-                    showSaveNotification('Failed to save data. Check extension settings.', true);
+                    showSaveNotification('Failed to queue data. Check extension settings.', true);
                 }
             }).catch(error => {
                 console.error('[Content Script] Error sending save message:', error);
